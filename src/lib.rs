@@ -1,18 +1,13 @@
+mod frontend;
+
 use wasm_bindgen::prelude::*;
 
-// When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
-// allocator.
 #[global_allocator]
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
 #[wasm_bindgen]
-extern "C" {
-  fn alert(s: &str);
-}
+pub fn run_app() -> Result<(), JsValue> {
+  yew::start_app::<frontend::App>();
 
-#[wasm_bindgen]
-pub fn greet() {
-  console_error_panic_hook::set_once();
-
-  alert("Hello, you-vid!");
+  Ok(())
 }
