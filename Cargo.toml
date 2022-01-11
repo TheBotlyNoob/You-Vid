@@ -35,9 +35,13 @@ serde = { version = "1.0", features = ["derive"] }
 tokio = { version = "1.15", features = ["macros", "rt-multi-thread"] }
 tracing = "0.1"
 tracing-subscriber = "0.3"
+tower-http = { version = "0.2", features = ["fs", "trace"] }
 
 [dev-dependencies]
 wasm-bindgen-test = "0.3"
+
+[build-dependencies]
+which = "4.2"
 
 [profile.release]
 # Tell `rustc` to optimize for small code size.

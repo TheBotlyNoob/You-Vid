@@ -38,7 +38,6 @@ impl Component for App {
   }
 
   fn view(&self, ctx: &Context<Self>) -> Html {
-    panic!();
     html! {
         <div>
             <div class="panel">
