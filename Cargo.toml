@@ -1,48 +1,9 @@
-[package]
-name = "you-vid"
-version = "0.1.0"
-authors = ["TheBotlyNoob <jj@jj.is-a.dev>"]
-edition = "2021"
-license = "MIT"
-
-[lib]
-crate-type = ["cdylib", "rlib"]
-
-[dependencies]
-wasm-bindgen = "0.2"
-
-# The `console_error_panic_hook` crate provides better debugging of panics by
-# logging them with `console.error`. This is great for development, but requires
-# all the `std::fmt` and `std::panicking` infrastructure, so isn't great for
-# code size when deploying.
-console_error_panic_hook = "0.1"
-
-# `wee_alloc` is a tiny allocator for wasm that is only ~1K in code size
-# compared to the default allocator's ~10K. It is slower than the default
-# allocator, however.
-#
-# Unfortunately, `wee_alloc` requires nightly Rust when targeting wasm for now.
-wee_alloc = "0.4"
-
-# frontend
-yew = "0.19"
-js-sys = "0.3"
-gloo-console = "0.2"
-
-# backend
-axum = "0.4"
-serde = { version = "1.0", features = ["derive"] }
-tokio = { version = "1.15", features = ["macros", "rt-multi-thread"] }
-tracing = "0.1"
-tracing-subscriber = "0.3"
-tower-http = { version = "0.2", features = ["fs", "trace"] }
-
-[dev-dependencies]
-wasm-bindgen-test = "0.3"
-
-[build-dependencies]
-which = "4.2"
+[workspace]
+members = ["backend", "frontend", "common"]
 
 [profile.release]
+opt-level = 3
+
+[profile.release.package.you-vid-frontend]
 # Tell `rustc` to optimize for small code size.
 opt-level = "s"

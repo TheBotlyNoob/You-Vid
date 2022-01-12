@@ -1,0 +1,23 @@
+[env]
+CARGO_MAKE_EXTEND_WORKSPACE_MAKEFILE = true
+
+[tasks.frontend]
+install_crate = "wasm-pack"
+command = "wasm-pack"
+args = ["build", "--target", "web", "../frontend"]
+
+[tasks.clean]
+command = "cargo"
+args = ["clean", "${@}"]
+
+[tasks.build]
+command = "cargo"
+args = ["build", "${@}"]
+
+[tasks.run]
+command = "cargo"
+args = ["run", "${@}"]
+dependencies = ["frontend"]
+
+[tasks.default]
+alias = "run"
