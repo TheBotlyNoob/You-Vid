@@ -2,6 +2,8 @@ use gloo_console as console;
 use js_sys::Date;
 use yew::{html, Component, Context, Html};
 
+pub enum Routes {}
+
 ///Define the possible messages which can be sent to the component
 #[derive(PartialEq, Debug)]
 pub enum Msg {

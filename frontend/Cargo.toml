@@ -28,6 +28,4 @@ wee_alloc = "0.4"
 yew = "0.19"
 js-sys = "0.3"
 gloo-console = "0.2"
-
-[dev-dependencies]
-wasm-bindgen-test = "0.3"
+yew-router = "0.16"
