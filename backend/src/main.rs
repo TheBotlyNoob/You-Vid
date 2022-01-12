@@ -34,8 +34,6 @@ async fn main() {
 
   // build our application with a route
   let app = Router::new()
-    // `GET /` goes to `root`
-    .route("/", get(async || INDEX))
     // `POST /users` goes to `create_user`
     .nest(
       "/static",
@@ -60,13 +58,14 @@ async fn main() {
         }
       )
     )
-    .layer(TraceLayer::new_for_http());
+    .layer(TraceLayer::new_for_http())
+    .fallback(get(async || INDEX));
 
   // run our app with hyper
   // `axum::Server` is a re-export of `hyper::Server`
   let addr = SocketAddr::from(([127, 0, 0, 1], *PORT));
 
-  tracing::debug!("listening on {}", addr);
+  tracing::debug!("listening on http://{}", addr);
 
   axum::Server::bind(&addr)
     .serve(app.into_make_service())

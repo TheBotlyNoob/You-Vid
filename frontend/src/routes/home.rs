@@ -1,8 +1,6 @@
 use gloo_console as console;
 use js_sys::Date;
-use yew::{html, Component, Context, Html};
-
-pub enum Routes {}
+use crate::prelude::*;
 
 ///Define the possible messages which can be sent to the component
 #[derive(PartialEq, Debug)]
@@ -12,11 +10,11 @@ pub enum Msg {
 }
 
 #[derive(PartialEq, Debug, Default)]
-pub struct App {
+pub struct Home {
   value: i64 // This will store the counter value
 }
 
-impl Component for App {
+impl Component for Home {
   type Message = Msg;
   type Properties = ();
 
