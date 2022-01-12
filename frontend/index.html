@@ -8,9 +8,9 @@
 
     <title>You-Vid</title>
     <script type="module">
-      import init, { run_app } from '/wasm/you_vid.js';
+      import init, { run_app } from '/wasm/you_vid_frontend.js';
 
-      init('/wasm/you_vid_bg.wasm').then(run_app);
+      init('/wasm/you_vid_frontend_bg.wasm').then(run_app);
     </script>
   </head>
   <body></body>
