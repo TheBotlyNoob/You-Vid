@@ -5,12 +5,12 @@ use gloo_console as console;
 #[derive(PartialEq, Debug)]
 pub enum Msg {
   Increment,
-  Decrement
+  Decrement,
 }
 
 #[derive(PartialEq, Debug, Default)]
 pub struct Home {
-  value: i64 // This will store the counter value
+  value: i64, // This will store the counter value
 }
 
 impl Component for Home {

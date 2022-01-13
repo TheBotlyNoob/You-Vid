@@ -18,10 +18,7 @@ impl Component for Login {
   fn view(&self, _ctx: &Context<Self>) -> Html {
     html! {
       if let Some(error) = &self.error {
-        <div class={ classes!("uk-alert-danger") } data-uk-alert={ "" }>
-          <a href="" class="uk-alert-close" data-uk-close=""></a>
-          <p>{ error }</p>
-        </div>
+        <Alert alert_type="danger">{ error }</Alert>
       }
     }
   }
