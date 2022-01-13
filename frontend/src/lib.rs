@@ -25,19 +25,7 @@ fn app() -> Html {
   }
 }
 
-pub mod router {
-  use super::*;
-  use routes::Route;
-
-  pub fn switch(route: &Route) -> Html {
-    match route {
-      Route::NotFound => html! { <routes::NotFound /> },
-      _ => unimplemented!()
-    }
-  }
-}
-
 mod prelude {
-  pub use yew_router::prelude::*;
   pub use yew::prelude::*;
+  pub use yew_router::prelude::*;
 }

@@ -4,14 +4,15 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/static/global.css" />
+    <link rel="stylesheet" href="/static/css/global.css" />
+    <script src="/static/js/init.js" type="module" async></script>
+
+    <!-- UIKit -->
+    <link rel="stylesheet" href="/static/css/uikit.min.css" />
+    <script src="/static/js/uikit.min.js" async />
+    <script src="/static/uikit-icons.min.js" async />
 
     <title>You-Vid</title>
-    <script type="module">
-      import init, { run_app } from '/wasm/you_vid_frontend.js';
-
-      init('/wasm/you_vid_frontend_bg.wasm').then(run_app);
-    </script>
   </head>
   <body></body>
 </html>
