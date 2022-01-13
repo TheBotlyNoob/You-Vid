@@ -1,6 +1,5 @@
 use crate::prelude::*;
 use gloo_console as console;
-use js_sys::Date;
 
 ///Define the possible messages which can be sent to the component
 #[derive(PartialEq, Debug)]
@@ -37,9 +36,9 @@ impl Component for Home {
     }
   }
 
-  fn view(&self, ctx: &Context<Self>) -> Html {
+  fn view(&self, _ctx: &Context<Self>) -> Html {
     html! {
-      <>
+      <h3>{ "All Uploaded Videos" }</h3>
     }
   }
 }

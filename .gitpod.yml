@@ -1,0 +1,3 @@
+tasks:
+  - init: cargo install cargo-make && cargo make build
+    command: cargo make run
