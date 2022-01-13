@@ -9,4 +9,4 @@ license = "MIT"
 
 [dependencies]
 serde = { version = "1.0", features = ["derive"] }
-dryoc = "0.3"
+dryoc = { version = "0.3", features = ["serde"] }

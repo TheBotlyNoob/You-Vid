@@ -31,4 +31,3 @@ gloo-console = "0.2"
 yew-router = "0.16"
 
 common = { path = "../common" }
-dryoc = "0.3"
