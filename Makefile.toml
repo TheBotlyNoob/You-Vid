@@ -13,6 +13,7 @@ args = ["clean", "${@}"]
 [tasks.build]
 command = "cargo"
 args = ["build", "${@}"]
+dependencies = ["frontend"]
 
 [tasks.run]
 command = "cargo"
