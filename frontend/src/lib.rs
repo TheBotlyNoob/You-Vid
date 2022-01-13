@@ -26,6 +26,7 @@ fn app() -> Html {
 }
 
 mod prelude {
+  pub use common::*;
   pub use yew::prelude::*;
   pub use yew_router::prelude::*;
 }

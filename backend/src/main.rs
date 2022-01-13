@@ -17,7 +17,7 @@ static PORT: Lazy<u16> = Lazy::new(|| {
   env::var("PORT")
     .unwrap_or_else(|_| "3000".to_string())
     .parse::<u16>()
-    .expect("Failed to parse port")
+    .unwrap_or(3000)
 });
 
 const INDEX: Html<&str> = Html(include_str!("../../frontend/index.html"));

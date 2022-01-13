@@ -1,5 +1,5 @@
 [package]
-name = "you-vid-frontend"
+name = "frontend"
 version = "0.1.0"
 authors = ["TheBotlyNoob <jj@jj.is-a.dev>"]
 edition = "2021"
@@ -29,3 +29,6 @@ yew = "0.19"
 js-sys = "0.3"
 gloo-console = "0.2"
 yew-router = "0.16"
+
+common = { path = "../common" }
+dryoc = "0.3"

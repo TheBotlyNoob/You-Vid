@@ -1,3 +1,3 @@
 tasks:
-  - init: cargo install cargo-make && cargo make build
+  - init: cargo install cargo-make && cargo install wasm-pack && cargo make build
     command: cargo make run
