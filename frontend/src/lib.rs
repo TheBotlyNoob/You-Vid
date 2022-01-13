@@ -1,3 +1,4 @@
+pub mod components;
 pub mod routes;
 
 use prelude::*;
@@ -26,6 +27,7 @@ fn app() -> Html {
 }
 
 mod prelude {
+  pub use super::components::*;
   pub use common::*;
   pub use yew::prelude::*;
   pub use yew_router::prelude::*;

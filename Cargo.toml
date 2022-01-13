@@ -4,6 +4,6 @@ members = ["backend", "frontend", "common"]
 [profile.release]
 opt-level = 3
 
-[profile.release.package.you-vid-frontend]
+[profile.release.package.frontend]
 # Tell `rustc` to optimize for small code size.
 opt-level = "s"
