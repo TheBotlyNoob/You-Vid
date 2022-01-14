@@ -1,11 +1,11 @@
 mod not_found;
-pub use not_found::*;
+pub use not_found::NotFound;
 
 mod home;
-pub use home::*;
+pub use home::Home;
 
 mod login;
-pub use login::*;
+pub use login::Login;
 
 use crate::prelude::*;
 

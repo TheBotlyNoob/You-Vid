@@ -4,7 +4,7 @@ use axum::{
   http::StatusCode,
   response::Html,
   routing::{get, get_service},
-  Router
+  Router,
 };
 use once_cell::sync::Lazy;
 // use serde::{Deserialize, Serialize};
@@ -24,11 +24,6 @@ const INDEX: Html<&str> = Html(include_str!("../../frontend/index.html"));
 
 #[tokio::main]
 async fn main() {
-  #[cfg(debug_assertions)]
-  if env::var("RUST_LOG").is_err() {
-    env::set_var("RUST_LOG", "you_vid_backend=debug");
-  }
-
   // initialize tracing
   tracing_subscriber::fmt::init();
 
@@ -41,10 +36,10 @@ async fn main() {
         |error: std::io::Error| async move {
           (
             StatusCode::INTERNAL_SERVER_ERROR,
-            format!("Unhandled internal error: {}", error)
+            format!("Unhandled internal error: {}", error),
           )
-        }
-      )
+        },
+      ),
     )
     .layer(TraceLayer::new_for_http())
     .nest(
@@ -53,10 +48,10 @@ async fn main() {
         |error: std::io::Error| async move {
           (
             StatusCode::INTERNAL_SERVER_ERROR,
-            format!("Unhandled internal error: {}", error)
+            format!("Unhandled internal error: {}", error),
           )
-        }
-      )
+        },
+      ),
     )
     .layer(TraceLayer::new_for_http())
     .fallback(get(async || INDEX));
@@ -65,7 +60,7 @@ async fn main() {
   // `axum::Server` is a re-export of `hyper::Server`
   let addr = SocketAddr::from(([127, 0, 0, 1], *PORT));
 
-  tracing::debug!("listening on http://{}", addr);
+  tracing::info!("listening on http://{}", addr);
 
   axum::Server::bind(&addr)
     .serve(app.into_make_service())

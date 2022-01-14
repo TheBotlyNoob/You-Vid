@@ -9,25 +9,22 @@ license = "MIT"
 crate-type = ["cdylib", "rlib"]
 
 [dependencies]
-wasm-bindgen = "0.2"
-
-# The `console_error_panic_hook` crate provides better debugging of panics by
-# logging them with `console.error`. This is great for development, but requires
-# all the `std::fmt` and `std::panicking` infrastructure, so isn't great for
-# code size when deploying.
-console_error_panic_hook = "0.1"
-
-# `wee_alloc` is a tiny allocator for wasm that is only ~1K in code size
-# compared to the default allocator's ~10K. It is slower than the default
-# allocator, however.
-#
-# Unfortunately, `wee_alloc` requires nightly Rust when targeting wasm for now.
+wasm-bindgen = { version = "0.2", features = ["serde-serialize"] }
 wee_alloc = "0.4"
 
 # frontend
 yew = "0.19"
 js-sys = "0.3"
-gloo-console = "0.2"
+gloo = "0.6"
 yew-router = "0.16"
+web-sys = { version = "0.3", features = [
+  "Response",
+  "Request",
+  "RequestInit",
+  "Window",
+] }
+serde = { version = "1.0.80", features = ["derive"] }
+wasm-bindgen-futures = "0.4"
+futures = "0.3"
 
 common = { path = "../common" }

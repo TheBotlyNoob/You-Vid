@@ -28,7 +28,10 @@ fn app() -> Html {
 
 mod prelude {
   pub use super::components::*;
-  pub use common::*;
+  pub use common::prelude::*;
+  pub use wasm_bindgen::{prelude::*, JsCast};
+  pub use wasm_bindgen_futures::{spawn_local, JsFuture};
+  pub use web_sys::Response;
   pub use yew::prelude::*;
   pub use yew_router::prelude::*;
 }
