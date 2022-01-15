@@ -27,6 +27,10 @@ const INDEX: Html<&str> = Html(include_str!("../../frontend/index.html"));
 
 #[tokio::main]
 async fn main() {
+  if std::env::var("RUST_LOG").is_err() {
+    std::env::set_var("RUST_LOG", "backend=debug,tower_http=debug")
+  }
+
   // initialize tracing
   tracing_subscriber::fmt::init();
 
@@ -66,7 +70,7 @@ async fn main() {
   // `axum::Server` is a re-export of `hyper::Server`
   let addr = SocketAddr::from(([0, 0, 0, 0], *PORT));
 
-  tracing::info!("listening on http://127.0.0.1:{}", *PORT);
+  tracing::debug!("listening on http://127.0.0.1:{}", *PORT);
 
   axum::Server::bind(&addr)
     .serve(app.into_make_service())

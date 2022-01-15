@@ -14,4 +14,5 @@ pub struct Response {
   pub user_id: u32,
   pub user_name: String,
   pub profile_picture: Base64,
+  pub email: String,
 }

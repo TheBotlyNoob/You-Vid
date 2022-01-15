@@ -1,6 +1,8 @@
+#![feature(type_alias_impl_trait)]
 pub mod api;
 
 pub type Base64 = String;
+pub type Base64Ref<'a> = &'a str;
 pub type UUID = String;
 
 pub mod prelude {
