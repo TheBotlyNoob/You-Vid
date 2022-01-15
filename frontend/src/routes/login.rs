@@ -37,7 +37,7 @@ impl Component for Login {
           let res = res.unwrap().dyn_into::<Response>().unwrap();
 
           if !res.ok() {
-            return Msg::SetError(Some(format!("Got status code {}", res.status())));
+            return Msg::SetError(Some(format!("Got status code {}", res.status(),)));
           }
 
           Msg::Nothing

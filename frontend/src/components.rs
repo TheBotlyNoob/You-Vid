@@ -1,2 +1,2 @@
 mod alert;
-pub use alert::*;
+pub use alert::{Alert, AlertProps};

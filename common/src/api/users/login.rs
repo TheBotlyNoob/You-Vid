@@ -2,14 +2,15 @@ use crate::prelude::*;
 use serde::{Deserialize, Serialize};
 
 #[derive(Deserialize, Serialize, Debug, PartialEq, Clone)]
-pub struct LoginRequest {
-  password: String,
-  email: String,
-  profile_picture: Option<Base64>,
+pub struct Request {
+  pub password: String,
+  pub email: String,
+  pub profile_picture: Option<Base64>,
 }
 
 #[derive(Deserialize, Serialize, Debug, PartialEq, Clone)]
-pub struct LoginResponse {
+pub struct Response {
+  pub error: Option<Error>,
   pub user_id: u32,
   pub user_name: String,
   pub profile_picture: Base64,

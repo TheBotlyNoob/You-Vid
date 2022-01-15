@@ -1,4 +1,4 @@
-#![feature(async_closure)]
+pub mod users;
 
 use axum::{
   http::StatusCode,
@@ -11,14 +11,17 @@ use once_cell::sync::Lazy;
 use std::{env, include_str, net::SocketAddr, path::Path};
 use tower_http::{services::ServeDir, trace::TraceLayer};
 
-static FRONTEND_PATH: Lazy<&Path> = Lazy::new(|| Path::new("../frontend"));
+pub static FRONTEND_PATH: Lazy<&Path> = Lazy::new(|| Path::new("../frontend"));
 
-static PORT: Lazy<u16> = Lazy::new(|| {
+pub static PORT: Lazy<u16> = Lazy::new(|| {
   env::var("PORT")
     .unwrap_or_else(|_| "3000".to_string())
     .parse::<u16>()
     .unwrap_or(3000)
 });
+
+pub static DATABASE: Lazy<sled::Db> =
+  Lazy::new(|| sled::open("db").expect("Failed to create database dir"));
 
 const INDEX: Html<&str> = Html(include_str!("../../frontend/index.html"));
 
@@ -26,6 +29,8 @@ const INDEX: Html<&str> = Html(include_str!("../../frontend/index.html"));
 async fn main() {
   // initialize tracing
   tracing_subscriber::fmt::init();
+
+  let api = Router::new().nest("/users", users::router());
 
   // build our application with a route
   let app = Router::new()
@@ -54,7 +59,8 @@ async fn main() {
       ),
     )
     .layer(TraceLayer::new_for_http())
-    .fallback(get(async || INDEX));
+    .nest("/api", api)
+    .fallback(get(|| async { INDEX }));
 
   // run our app with hyper
   // `axum::Server` is a re-export of `hyper::Server`
@@ -66,4 +72,12 @@ async fn main() {
     .serve(app.into_make_service())
     .await
     .unwrap();
+}
+
+pub mod prelude {
+  pub use super::DATABASE as database;
+  pub use axum::{routing::*, Json, Router};
+  pub use common::*;
+  pub use serde::Deserialize as _;
+  pub use serde_json::{from_value as json_from_value, json};
 }
