@@ -1,15 +1,10 @@
-pub mod users;
+pub mod api;
 
-use axum::{
-  http::StatusCode,
-  response::Html,
-  routing::{get, get_service},
-  Router,
-};
 use once_cell::sync::Lazy;
-// use serde::{Deserialize, Serialize};
-use std::{env, include_str, net::SocketAddr, path::Path};
-use tower_http::{services::ServeDir, trace::TraceLayer};
+use prelude::*;
+use std::{env, include_str, path::Path};
+use tide_compress::CompressMiddleware;
+use tide_tracing::TraceMiddleware;
 
 pub static FRONTEND_PATH: Lazy<&Path> = Lazy::new(|| Path::new("../frontend"));
 
@@ -23,65 +18,57 @@ pub static PORT: Lazy<u16> = Lazy::new(|| {
 pub static DATABASE: Lazy<sled::Db> =
   Lazy::new(|| sled::open("db").expect("Failed to create database dir"));
 
-const INDEX: Html<&str> = Html(include_str!("../../frontend/index.html"));
-
 #[tokio::main]
-async fn main() {
+async fn main() -> TideResult<()> {
   if std::env::var("RUST_LOG").is_err() {
-    std::env::set_var("RUST_LOG", "backend=debug,tower_http=debug")
+    std::env::set_var("RUST_LOG", "backend=debug,tide=debug")
   }
 
   // initialize tracing
   tracing_subscriber::fmt::init();
 
-  let api = Router::new().nest("/users", users::router());
+  let mut server = Server::new();
 
-  // build our application with a route
-  let app = Router::new()
-    // `POST /users` goes to `create_user`
-    .nest(
-      "/static",
-      get_service(ServeDir::new(FRONTEND_PATH.join("static"))).handle_error(
-        |error: std::io::Error| async move {
-          (
-            StatusCode::INTERNAL_SERVER_ERROR,
-            format!("Unhandled internal error: {}", error),
-          )
-        },
-      ),
-    )
-    .layer(TraceLayer::new_for_http())
-    .nest(
-      "/wasm",
-      get_service(ServeDir::new(FRONTEND_PATH.join("pkg"))).handle_error(
-        |error: std::io::Error| async move {
-          (
-            StatusCode::INTERNAL_SERVER_ERROR,
-            format!("Unhandled internal error: {}", error),
-          )
-        },
-      ),
-    )
-    .layer(TraceLayer::new_for_http())
-    .nest("/api", api)
-    .fallback(get(|| async { INDEX }));
+  server.with(TraceMiddleware::new());
+  server.with(CompressMiddleware::new());
 
-  // run our app with hyper
-  // `axum::Server` is a re-export of `hyper::Server`
-  let addr = SocketAddr::from(([0, 0, 0, 0], *PORT));
+  server.at("/api").nest(api::router());
 
-  tracing::debug!("listening on http://127.0.0.1:{}", *PORT);
+  server
+    .at("/static")
+    .serve_dir(FRONTEND_PATH.join("static"))?;
 
-  axum::Server::bind(&addr)
-    .serve(app.into_make_service())
-    .await
-    .unwrap();
+  server.at("/wasm").serve_dir(FRONTEND_PATH.join("pkg"))?;
+
+  server.at("/*").get(frontend).at("/").get(frontend);
+
+  println!(
+    "{}",
+    frontend_server::App::new()
+      .pdom
+      .root_node()
+      .dyn_into::<Element>()
+  );
+
+  server.listen(format!("0.0.0.0:{}", *PORT)).await?;
+
+  Ok(())
 }
 
 pub mod prelude {
   pub use super::DATABASE as database;
-  pub use axum::{routing::*, Json, Router};
-  pub use common::*;
-  pub use serde::Deserialize as _;
+  pub use common::prelude::*;
+  pub use serde::Deserialize;
   pub use serde_json::{from_value as json_from_value, json};
+  pub use tide::{http::mime, Body, Request, Response, Result as TideResult, Server};
+  pub use wasm_bindgen::cast::JsCast;
+}
+
+async fn frontend(_req: Request<()>) -> TideResult<Response> {
+  Ok(
+    Response::builder(200)
+      .content_type(mime::HTML)
+      .body(include_str!("../../frontend/client/index.html"))
+      .build(),
+  )
 }

@@ -9,7 +9,9 @@ pub mod prelude {
   pub type Base64 = super::Base64;
   pub type UUID = super::UUID;
 
-  pub type Error = super::api::error::Error;
+  pub type ApiError = super::api::error::Error;
+
+  pub use super::api;
 
   pub use serde::{de::DeserializeOwned, Deserialize, Serialize};
 }

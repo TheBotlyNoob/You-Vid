@@ -1,9 +1,9 @@
 [workspace]
-members = ["backend", "frontend", "common"]
+members = ["backend", "frontend/client", "frontend/server", "common"]
 
 [profile.release]
 opt-level = 3
 
-[profile.release.package.frontend]
+[profile.release.package.frontend-client]
 # Tell `rustc` to optimize for small code size.
 opt-level = "s"

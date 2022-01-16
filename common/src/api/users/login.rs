@@ -10,7 +10,7 @@ pub struct Request {
 
 #[derive(Deserialize, Serialize, Debug, PartialEq, Clone)]
 pub struct Response {
-  pub error: Option<Error>,
+  pub error: Option<ApiError>,
   pub user_id: u32,
   pub user_name: String,
   pub profile_picture: Base64,

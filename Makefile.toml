@@ -4,7 +4,7 @@ CARGO_MAKE_EXTEND_WORKSPACE_MAKEFILE = true
 [tasks.frontend]
 install_crate = "wasm-pack"
 command = "wasm-pack"
-args = ["build", "--target", "web", "../frontend"]
+args = ["build", "--target", "web", "../frontend/client"]
 
 [tasks.clean]
 command = "cargo"
