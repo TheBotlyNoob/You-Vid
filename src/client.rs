@@ -1,2 +1,0 @@
-const HTML_PLACEHOLDER: &str = "__INITIAL_HTML__";
-const STATE_PLACEHOLDLER: &str = "__INITIAL_STATE";

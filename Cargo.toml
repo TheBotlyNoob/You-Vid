@@ -1,13 +1,2 @@
-[package]
-name = "you-vid"
-version = "0.1.0"
-edition = "2021"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
-[dependencies]
-percy-dom = "0.7"
-tokio = { version = "1.15", features = ["macros", "rt-multi-thread"] }
-serde = { version = "1.0", features = ["derive"] }
-tide = "0.16"
-substrate-wasm-builder = "4.0"
+[workspace]
+members = ["client", "server"]
