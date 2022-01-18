@@ -4,3 +4,10 @@
 /bin/
 /frontend/pkg/
 wasm-pack.log
+
+
+# Added by cargo
+#
+# already existing elements were commented out
+
+#/target
